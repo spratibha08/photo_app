@@ -27,7 +27,7 @@ public class UserController {
 	{
 		return "get user was called";
 	}
-	//Post request.
+	//Post request...
 	@PostMapping
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails)
 	{
