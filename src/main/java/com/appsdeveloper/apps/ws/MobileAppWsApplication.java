@@ -8,6 +8,7 @@ public class MobileAppWsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MobileAppWsApplication.class, args);
+		// test comment for trial git commands test
 	}
 
 }
