@@ -11,6 +11,8 @@ public class MobileAppWsApplication {
 		// test comment for trial git commands test
 		// test commnet - adding more detailed comment - test2
 		// test comment - for jenkins job test
+		
+		// test practiceGit1
 	}
 
 }
