@@ -16,6 +16,7 @@ import com.appsdeveloper.apps.ws.io.repositories.UserRepository;
 import com.appsdeveloper.apps.ws.shared.Utils;
 import com.appsdeveloper.apps.ws.shared.dto.UserDto;
 
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -30,6 +31,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto createUser(UserDto user) {
+		
+		if(userRepository.findByEmail(user.getEmail()) != null) throw new RuntimeException("Record already exists");
 
 		if (userRepository.findByEmail(user.getEmail()) != null)
 			throw new RuntimeException("Record already exists");
@@ -81,5 +84,6 @@ public class UserServiceImpl implements UserService {
 
 		return returnValue;
 	}
+
 
 }

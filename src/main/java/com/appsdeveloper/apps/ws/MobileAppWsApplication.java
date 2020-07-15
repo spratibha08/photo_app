@@ -35,5 +35,4 @@ public class MobileAppWsApplication {
 	{
 		return new AppProperties();
 	}
-	
 }
