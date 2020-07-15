@@ -39,7 +39,8 @@ public class UserController {
 	//Post request...
 	@PostMapping( 
 			consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE },
-			produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE } )
+			produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE } 
+			)
 	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception
 	{
 		UserRest returnValue = new UserRest();
@@ -49,17 +50,32 @@ public class UserController {
 		
 		UserDto userDto = new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);
-		
+																					
 		UserDto createdUser = userService.createUser(userDto);
 		BeanUtils.copyProperties(createdUser, returnValue);
 		
 		return returnValue;
 	}
 	
-	@PutMapping
-	public String updateUser()
+	@PutMapping(
+			path="/{id}", 
+			consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE },
+			produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }			
+			)
+	public UserRest updateUser(@PathVariable String id, @RequestBody UserDetailsRequestModel userDetails)
 	{
-		return "update user was called";
+		UserRest returnValue = new UserRest();
+		
+		//if(userDetails.getFirstName().isEmpty()) throw new UserServiceException(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+		if(userDetails.getFirstName().isEmpty()) throw new NullPointerException("The object is null.");
+		
+		UserDto userDto = new UserDto();
+		BeanUtils.copyProperties(userDetails, userDto);
+																					
+		UserDto updateUser = userService.updateUser(id, userDto);
+		BeanUtils.copyProperties(updateUser, returnValue);		
+		
+		return returnValue;
 	}
 
 	@DeleteMapping

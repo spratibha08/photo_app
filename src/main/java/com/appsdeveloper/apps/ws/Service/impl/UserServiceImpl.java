@@ -11,10 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.appsdeveloper.apps.ws.Service.UserService;
+import com.appsdeveloper.apps.ws.exceptions.UserServiceException;
 import com.appsdeveloper.apps.ws.io.entity.UserEntity;
 import com.appsdeveloper.apps.ws.io.repositories.UserRepository;
 import com.appsdeveloper.apps.ws.shared.Utils;
 import com.appsdeveloper.apps.ws.shared.dto.UserDto;
+import com.appsdeveloper.apps.ws.ui.model.response.ErrorMessages;
 
 
 @Service
@@ -85,5 +87,24 @@ public class UserServiceImpl implements UserService {
 		return returnValue;
 	}
 
+	@Override
+	public UserDto updateUser(String userId, UserDto user) {
+		// TODO Auto-generated method stub
+		UserDto returnValue = new UserDto();
+		
+		UserEntity userEntity = userRepository.findByUserId(userId);
+
+		if (userEntity == null)
+			throw new UserServiceException(ErrorMessages.NO_RECORD_FOUND.getErrorMessage());
+		
+		userEntity.setFirstName(user.getFirstName());
+		userEntity.setLastName(user.getLastName());
+		
+		UserEntity updatedUserDetails = userRepository.save(userEntity);
+		
+		BeanUtils.copyProperties(updatedUserDetails, returnValue);
+		
+		return returnValue;
+	}
 
 }
